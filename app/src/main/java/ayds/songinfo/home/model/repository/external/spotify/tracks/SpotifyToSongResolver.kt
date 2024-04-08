@@ -16,6 +16,7 @@ private const val ARTISTS = "artists"
 private const val ALBUM = "album"
 private const val IMAGES = "images"
 private const val RELEASE_DATE = "release_date"
+private const val RELEASE_DATE_PRECISION = "release_date_precision"
 private const val URL = "url"
 private const val EXTERNAL_URL = "external_urls"
 private const val SPOTIFY = "spotify"
@@ -26,8 +27,8 @@ internal class JsonToSongResolver : SpotifyToSongResolver {
         try {
             serviceData?.getFirstItem()?.let { item ->
                 SpotifySong(
-                  item.getId(), item.getSongName(), item.getArtistName(), item.getAlbumName(),
-                  item.getReleaseDate(), item.getSpotifyUrl(), item.getImageUrl()
+                    item.getId(), item.getSongName(), item.getArtistName(), item.getAlbumName(),
+                    item.getReleaseDate(), item.getSpotifyUrl(), item.getImageUrl()
                 )
             }
         } catch (e: Exception) {
@@ -60,6 +61,11 @@ internal class JsonToSongResolver : SpotifyToSongResolver {
         return album[RELEASE_DATE].asString
     }
 
+    private fun JsonObject.getReleaseDatePrecision(): String {
+        val album = this[ALBUM].asJsonObject
+        return album[RELEASE_DATE_PRECISION].asString
+    }
+
     private fun JsonObject.getImageUrl(): String {
         val album = this[ALBUM].asJsonObject
         return album[IMAGES].asJsonArray[1].asJsonObject[URL].asString
@@ -69,5 +75,4 @@ internal class JsonToSongResolver : SpotifyToSongResolver {
         val externalUrl = this[EXTERNAL_URL].asJsonObject
         return externalUrl[SPOTIFY].asString
     }
-
 }
