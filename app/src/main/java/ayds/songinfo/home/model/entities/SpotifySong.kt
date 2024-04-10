@@ -11,8 +11,7 @@ sealed class Song {
         val spotifyUrl: String,
         val imageUrl: String,
         var isLocallyStored: Boolean = false
-    ) : Song() {
-    }
+    ) : Song()
 
     object EmptySong : Song()
 }
