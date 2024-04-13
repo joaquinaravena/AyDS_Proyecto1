@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import ayds.songinfo.R;
@@ -32,10 +31,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class OtherInfoWindow extends Activity {
 
   public final static String ARTIST_NAME_EXTRA = "artistName";
-
   private TextView textPane1;
-  //private JPanel imagePanel;
- // private JLabel posterImageLabel;
+
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,11 +42,10 @@ public class OtherInfoWindow extends Activity {
 
     textPane1 = findViewById(R.id.textPane1);
 
-
-    open(getIntent().getStringExtra("artistName"));
+    open(getIntent().getStringExtra(ARTIST_NAME_EXTRA));
   }
 
-  public void getARtistInfo(String artistName) {
+  public void getArtistInfo(String artistName) {
 
     // create
     Retrofit retrofit = new Retrofit.Builder()
@@ -181,7 +177,7 @@ public class OtherInfoWindow extends Activity {
     }).start();
 
 
-    getARtistInfo(artist);
+    getArtistInfo(artist);
   }
 
   public static String textToHtml(String text, String term) {
