@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.room.Room;
@@ -29,6 +28,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class OtherInfoWindow extends Activity {
 
   public final static String ARTIST_NAME_EXTRA = "artistName";
+  public static final String BASE_URL = "https://ws.audioscrobbler.com/2.0/";
+  public static final String IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png";
   private TextView textPane1;
   private ArticleDatabase dataBase = null;
 
@@ -45,7 +46,7 @@ public class OtherInfoWindow extends Activity {
   public void getArtistInfo(String artistName) {
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://ws.audioscrobbler.com/2.0/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build();
 
@@ -60,15 +61,8 @@ public class OtherInfoWindow extends Activity {
           String text = "";
 
           if (article != null) {
-
             text = "[*]" + article.getBiography();
-
-            final String urlString = article.getArticleUrl();
-            findViewById(R.id.openUrlButton1).setOnClickListener(viewOnClick -> {
-              Intent intent = new Intent(Intent.ACTION_VIEW);
-              intent.setData(Uri.parse(urlString));
-              startActivity(intent);
-            });
+            addListenerToOpenUrlButton1(article.getArticleUrl());
 
           } else {
             Response<String> callResponse;
@@ -96,52 +90,34 @@ public class OtherInfoWindow extends Activity {
                 new Thread(() ->
                         dataBase.ArticleDao().insertArticle(new ArticleEntity(artistName, text2, url.getAsString()))).start();
               }
-              final String urlString = url.getAsString();
-              findViewById(R.id.openUrlButton1).setOnClickListener(viewOnClick -> {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(urlString));
-                startActivity(intent);
-              });
+              addListenerToOpenUrlButton1(url.getAsString());
 
             } catch (IOException e1) {
               Log.e("TAG", "Error " + e1);
-              e1.printStackTrace();
             }
           }
 
+          Log.e("TAG","Get Image from " + IMAGE_URL);
 
-          String imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png";
-
-          Log.e("TAG","Get Image from " + imageUrl);
-
-
-
-          final String finalText = text;
-
+          String finalText = text;
           runOnUiThread( () -> {
-            Picasso.get().load(imageUrl).into((ImageView) findViewById(R.id.imageView1));
+            Picasso.get().load(IMAGE_URL).into((ImageView) findViewById(R.id.imageView1));
 
-            textPane1.setText(Html.fromHtml( finalText));
+            textPane1.setText(Html.fromHtml(finalText, Html.FROM_HTML_MODE_LEGACY));
           });
         }).start();
   }
 
+  private void addListenerToOpenUrlButton1(String urlArticle) {
+    findViewById(R.id.openUrlButton1).setOnClickListener(viewOnClick -> {
+      Intent intent = new Intent(Intent.ACTION_VIEW);
+      intent.setData(Uri.parse(urlArticle));
+      startActivity(intent);
+    });
+  }
+
   private void open(String artist) {
-
-
-    dataBase =    Room.databaseBuilder(this, ArticleDatabase.class, "database-name-thename").build();
-
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        dataBase.ArticleDao().insertArticle(new ArticleEntity( "test", "sarasa", "")  );
-        Log.e("TAG", ""+ dataBase.ArticleDao().getArticleByArtistName("test"));
-        Log.e("TAG", ""+ dataBase.ArticleDao().getArticleByArtistName("nada"));
-
-      }
-    }).start();
-
-
+    dataBase = Room.databaseBuilder(this, ArticleDatabase.class, "database-name-thename").build();
     getArtistInfo(artist);
   }
 
