@@ -10,6 +10,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.room.Room.databaseBuilder
 import ayds.songinfo.R
+import ayds.songinfo.moredetails.fulllogic.model.ArticleDatabase
+import ayds.songinfo.moredetails.fulllogic.model.ArticleEntity
+import ayds.songinfo.moredetails.fulllogic.model.entities.ArtistBiography
+import ayds.songinfo.moredetails.fulllogic.model.repository.LastFMAPI
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.squareup.picasso.Picasso
@@ -22,7 +26,6 @@ private const val ARTICLE_BD_NAME = "database-article"
 private const val LASTFM_BASE_URL = "https://ws.audioscrobbler.com/2.0/"
 private const val LASTFM_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
 
-data class ArtistBiography(val artistName: String, val biography: String, val articleUrl: String)
 
 class OtherInfoWindow : Activity() {
     
