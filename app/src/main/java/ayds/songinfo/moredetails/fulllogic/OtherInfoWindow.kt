@@ -10,10 +10,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.room.Room.databaseBuilder
 import ayds.songinfo.R
-import ayds.songinfo.moredetails.fulllogic.model.ArticleDatabase
-import ayds.songinfo.moredetails.fulllogic.model.ArticleEntity
+import ayds.songinfo.moredetails.fulllogic.model.repository.internal.ArticleDatabase
+import ayds.songinfo.moredetails.fulllogic.model.repository.internal.ArticleEntity
 import ayds.songinfo.moredetails.fulllogic.model.entities.ArtistBiography
-import ayds.songinfo.moredetails.fulllogic.model.repository.LastFMAPI
+import ayds.songinfo.moredetails.fulllogic.model.repository.external.LastFMAPI
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.squareup.picasso.Picasso
