@@ -53,6 +53,7 @@ class OtherInfoWindow : Activity() {
         openUrlButton = findViewById(R.id.openUrlButton)
     }
 
+    // repository
     private fun initArticleDataBase() {
         articleDataBase =
             databaseBuilder(this, ArticleDatabase::class.java, ARTICLE_BD_NAME).build()
@@ -77,30 +78,7 @@ class OtherInfoWindow : Activity() {
         updateUI(artistBiography)
     }
 
-    private fun getArtistBiographyRepository() : ArtistBiography {
-        val artistName = getArtistName()
-        val dbArticle = getArticleFromDB(artistName)
-        val artistBiography: ArtistBiography
-
-        if (dbArticle != null) {
-            artistBiography = dbArticle.markItAsLocal()
-        } else {
-            artistBiography = getArticleFromService(artistName)
-            if(artistBiography.biography.isNotEmpty())
-                insertArtistIntoDB(artistBiography)
-        }
-        return artistBiography
-    }
-
-    private fun ArtistBiography.markItAsLocal() = copy(biography = "[*]$biography")
-
-    private fun getArticleFromDB(artistName: String): ArtistBiography? {
-        val artistEntity = articleDataBase.ArticleDao().getArticleByArtistName(artistName)
-        return artistEntity?.let {
-            ArtistBiography(artistName, artistEntity.biography, artistEntity.articleUrl)
-        }
-    }
-
+    // poner en implementacion de repository external
     private fun getArticleFromService(artistName: String): ArtistBiography {
         var artistBiography = ArtistBiography(artistName, "", "")
         try {
@@ -111,7 +89,7 @@ class OtherInfoWindow : Activity() {
         }
         return artistBiography
     }
-
+    // poner en implementacion de repository external
     private fun getArtistBioFromExternalData(serviceData: String?, artistName: String): ArtistBiography {
         val gson = Gson()
         val jobj = gson.fromJson(serviceData, JsonObject::class.java)
@@ -124,14 +102,24 @@ class OtherInfoWindow : Activity() {
         return ArtistBiography(artistName, text, url.asString)
     }
 
+    //ver donde iria
     private fun getSongFromService(artistName: String) =
         lastFMAPI.getArtistInfo(artistName).execute()
+
+    //Internal repository
+    private fun getArticleFromDB(artistName: String): ArtistBiography? {
+        val artistEntity = articleDataBase.ArticleDao().getArticleByArtistName(artistName)
+        return artistEntity?.let {
+            ArtistBiography(artistName, artistEntity.biography, artistEntity.articleUrl)
+        }
+    }
 
     private fun insertArtistIntoDB(artistBiography: ArtistBiography) {
             articleDataBase.ArticleDao().insertArticle(
                 ArticleEntity(artistBiography.artistName, artistBiography.biography, artistBiography.articleUrl)
             )
     }
+    // end repository
 
     private fun updateUI(artistBiography: ArtistBiography) {
         runOnUiThread {
