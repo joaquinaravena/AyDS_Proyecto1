@@ -10,9 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.room.Room.databaseBuilder
 import ayds.songinfo.R
-import ayds.songinfo.moredetails.fulllogic.model.repository.internal.ArticleDatabase
-import ayds.songinfo.moredetails.fulllogic.model.repository.internal.ArticleEntity
-import ayds.songinfo.moredetails.fulllogic.model.entities.ArtistBiography
+import ayds.songinfo.moredetails.fulllogic.model.entities.Biography
+import ayds.songinfo.moredetails.fulllogic.model.repository.local.ArticleDatabase
+import ayds.songinfo.moredetails.fulllogic.model.repository.local.ArticleEntity
 import ayds.songinfo.moredetails.fulllogic.model.repository.external.LastFMAPI
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -79,18 +79,18 @@ class OtherInfoWindow : Activity() {
     }
 
     // poner en implementacion de repository external
-    private fun getArticleFromService(artistName: String): ArtistBiography {
-        var artistBiography = ArtistBiography(artistName, "", "")
+    private fun getArticleFromService(artistName: String): Biography.ArtistBiography {
+        var biography = Biography.ArtistBiography(artistName, "", "")
         try {
             val callResponse = getSongFromService(artistName)
-            artistBiography = getArtistBioFromExternalData(callResponse.body(), artistName)
+            biography = getArtistBioFromExternalData(callResponse.body(), artistName)
         }  catch (e1: IOException) {
             e1.printStackTrace()
         }
-        return artistBiography
+        return biography
     }
     // poner en implementacion de repository external
-    private fun getArtistBioFromExternalData(serviceData: String?, artistName: String): ArtistBiography {
+    private fun getArtistBioFromExternalData(serviceData: String?, artistName: String): Biography.ArtistBiography {
         val gson = Gson()
         val jobj = gson.fromJson(serviceData, JsonObject::class.java)
         val artist = jobj["artist"].asJsonObject
@@ -99,7 +99,7 @@ class OtherInfoWindow : Activity() {
         val url = artist["url"]
         val text = extract?.asString ?: "No Results"
 
-        return ArtistBiography(artistName, text, url.asString)
+        return Biography.ArtistBiography(artistName, text, url.asString)
     }
 
     //ver donde iria
@@ -107,21 +107,21 @@ class OtherInfoWindow : Activity() {
         lastFMAPI.getArtistInfo(artistName).execute()
 
     //Internal repository
-    private fun getArticleFromDB(artistName: String): ArtistBiography? {
+    private fun getArticleFromDB(artistName: String): Biography.ArtistBiography? {
         val artistEntity = articleDataBase.ArticleDao().getArticleByArtistName(artistName)
         return artistEntity?.let {
-            ArtistBiography(artistName, artistEntity.biography, artistEntity.articleUrl)
+            Biography.ArtistBiography(artistName, artistEntity.biography, artistEntity.articleUrl)
         }
     }
 
-    private fun insertArtistIntoDB(artistBiography: ArtistBiography) {
+    private fun insertArtistIntoDB(biography: Biography.ArtistBiography) {
             articleDataBase.ArticleDao().insertArticle(
-                ArticleEntity(artistBiography.artistName, artistBiography.biography, artistBiography.articleUrl)
+                ArticleEntity(biography.artistName, biography.biography, biography.articleUrl)
             )
     }
     // end repository
 
-    private fun updateUI(artistBiography: ArtistBiography) {
+    private fun updateUI(artistBiography: Biography.ArtistBiography) {
         runOnUiThread {
             updateOpenUrlButton(artistBiography)
             updateArticleTextView(artistBiography)
@@ -129,7 +129,7 @@ class OtherInfoWindow : Activity() {
         }
     }
 
-    private fun updateOpenUrlButton(artistBiography: ArtistBiography) {
+    private fun updateOpenUrlButton(artistBiography: Biography.ArtistBiography) {
         openUrlButton.setOnClickListener {
             navigateToUrl(artistBiography.articleUrl)
         }
@@ -141,7 +141,7 @@ class OtherInfoWindow : Activity() {
         startActivity(intent)
     }
 
-    private fun updateArticleTextView(artistBiography: ArtistBiography) {
+    private fun updateArticleTextView(artistBiography: Biography.ArtistBiography) {
         val text = artistBiography.biography.replace("\\n", "\n")
         articleTextView.text = Html.fromHtml(textToHtml(text, artistBiography.artistName))
     }

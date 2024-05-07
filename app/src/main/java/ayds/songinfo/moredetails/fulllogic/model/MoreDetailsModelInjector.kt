@@ -12,6 +12,7 @@ import ayds.songinfo.moredetails.fulllogic.view.MoreDetailsView
 import ayds.songinfo.home.model.repository.external.spotify.SpotifyInjector
 
 object MoreDetailsModelInjector {
+
     private lateinit var moreDetailsModel : MoreDetailsModel
 
     fun getMoreDetailsModel(): MoreDetailsModel = moreDetailsModel

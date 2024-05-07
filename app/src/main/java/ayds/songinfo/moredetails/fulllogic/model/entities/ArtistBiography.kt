@@ -1,3 +1,12 @@
 package ayds.songinfo.moredetails.fulllogic.model.entities
 
-data class ArtistBiography(val artistName: String, val biography: String, val articleUrl: String)
+sealed class Biography {
+    data class ArtistBiography(
+        val artistName: String,
+        val biography: String,
+        val articleUrl: String,
+        var isLocallyStored: Boolean = false
+    ) : Biography()
+
+    object EmptyBiography : Biography()
+}
