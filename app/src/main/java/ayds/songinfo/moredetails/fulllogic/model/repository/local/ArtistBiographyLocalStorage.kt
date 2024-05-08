@@ -1,6 +1,5 @@
 package ayds.songinfo.moredetails.fulllogic.model.repository.local
 
-import ayds.songinfo.moredetails.fulllogic.model.entities.Biography
 import ayds.songinfo.moredetails.fulllogic.model.entities.Biography.ArtistBiography
 
 interface ArtistBiographyLocalStorage {

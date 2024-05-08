@@ -1,7 +1,9 @@
 package ayds.songinfo.moredetails.fulllogic.view
 
+
 data class MoreDetailsUiState(
-    val songId: String = "",
-    val songDescription: String = "",
+    val artistName: String = "",
+    val biography: String = "",
+    val articleUrl: String = "",
     val actionsEnabled : Boolean = false
 )
