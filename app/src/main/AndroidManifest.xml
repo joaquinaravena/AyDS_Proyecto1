@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AydsSongInfo">
-        <activity android:name=".moredetails.fulllogic.view.HomeViewActivity"
+        <activity android:name=".home.view.HomeViewActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".moredetails.fulllogic.OtherInfoWindow"
+        <activity android:name=".moredetails.presentation.OtherInfoActivity"
            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
