@@ -27,7 +27,7 @@
                 android:paddingTop="24dp"/>
 
             <TextView
-                android:id="@+id/textPane1"
+                android:id="@+id/lastFMPane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -35,21 +35,21 @@
                 android:padding="16dp" />
 
             <Button
-                android:id="@+id/openUrlButton"
+                android:id="@+id/lastFMButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="View Full Article" />
+                android:text="View LastFM Article" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/newYTImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:paddingTop="24dp"/>
 
             <TextView
-                android:id="@+id/textPane2"
+                android:id="@+id/newYTPane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -57,22 +57,22 @@
                 android:padding="16dp" />
 
             <Button
-                android:id="@+id/openUrlButton2"
-                android:visibility="gone"
+                android:id="@+id/newYTButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_margin="16dp"
-                android:text="View Full Article" />
+                android:text="View New York Times Article" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/wikipediaImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:paddingTop="24dp"/>
 
             <TextView
-                android:id="@+id/textPane3"
+                android:id="@+id/wikipediaPane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -80,12 +80,18 @@
                 android:padding="16dp" />
 
             <Button
-                android:id="@+id/openUrlButton3"
-                android:visibility="gone"
+                android:id="@+id/wikipediaButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_margin="16dp"
-                android:text="View Full Article" />
+                android:text="View Wikipedia Article" />
+            <TextView
+                    android:id="@+id/sourcePane"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lastFM"
+                    android:padding="16dp"/>
 
         </LinearLayout>
 

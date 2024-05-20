@@ -8,20 +8,20 @@ interface OtherInfoLocalStorage {
 }
 
 internal class OtherInfoLocalStorageImpl(
-    private val articleDatabase: ArticleDatabase,
+    private val cardDatabase: CardDatabase,
 ) : OtherInfoLocalStorage {
 
     override fun getArticle(artistName: String): ArtistBiography? {
-        val artistEntity = articleDatabase.ArticleDao().getArticleByArtistName(artistName)
+        val artistEntity = cardDatabase.CardDao().getArticleByArtistName(artistName, "LastFMAPI")
         return artistEntity?.let {
-            ArtistBiography(artistName, artistEntity.biography, artistEntity.articleUrl)
+            ArtistBiography(artistName, artistEntity.description, artistEntity.infoUrl)
         }
     }
 
     override fun insertArtist(artistBiography: ArtistBiography) {
-        articleDatabase.ArticleDao().insertArticle(
-            ArticleEntity(
-                artistBiography.artistName, artistBiography.biography, artistBiography.articleUrl
+        cardDatabase.CardDao().insertArticle(
+            CardEntity(
+                artistBiography.artistName, artistBiography.biography, artistBiography.articleUrl, "LastFMAPI", "https://cdn.iconscout.com/icon/free/png-256/lastfm-282152.png"
             )
         )
     }

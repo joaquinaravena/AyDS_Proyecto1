@@ -41,8 +41,8 @@ class OtherInfoActivity : Activity() {
     }
 
     private fun initViewProperties() {
-        articleTextView = findViewById(R.id.textPane1)
-        openUrlButton = findViewById(R.id.openUrlButton)
+        articleTextView = findViewById(R.id.lastFMPane)
+        openUrlButton = findViewById(R.id.lastFMButton)
         lastFMImageView = findViewById(R.id.lastFMImageView)
     }
 
