@@ -34,6 +34,13 @@
                 android:linksClickable="true"
                 android:padding="16dp" />
 
+            <TextView
+                    android:id="@+id/sourcePane"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Source: LastFM"
+                    android:padding="16dp"/>
+
             <Button
                 android:id="@+id/lastFMButton"
                 android:layout_width="wrap_content"
@@ -86,12 +93,6 @@
                 android:visibility="gone"
                 android:layout_margin="16dp"
                 android:text="View Wikipedia Article" />
-            <TextView
-                    android:id="@+id/sourcePane"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="lastFM"
-                    android:padding="16dp"/>
 
         </LinearLayout>
 
