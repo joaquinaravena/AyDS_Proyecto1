@@ -15,11 +15,7 @@ class ArtistBiographyDescriptionHelperTest{
 
     @Test
     fun `given a local Artist biography should return the description`(){
-        val artistBiography : ArtistBiography = mockk()
-
-        every { artistBiography.isLocallyStored } returns true
-        every { artistBiography.biography } returns "Biography"
-        every { artistBiography.artistName } returns "Artist"
+        val artistBiography = ArtistBiography("Artist", "Biography", "url", true)
 
         val result = artistBiographyDescriptionHelper.getDescription(artistBiography)
         val expected = "<html><div width=400><font face=\"arial\">[*]${artistBiography.biography}</font></div></html>"
@@ -29,15 +25,52 @@ class ArtistBiographyDescriptionHelperTest{
 
     @Test
     fun `given a non local Artist biography should return the description`(){
-        val artistBiography : ArtistBiography = mockk()
-
-        every { artistBiography.isLocallyStored } returns false
-        every { artistBiography.biography } returns "Biography"
-        every { artistBiography.artistName } returns "Artist"
+        val artistBiography = ArtistBiography("Artist", "Biography", "url", false)
 
         val result = artistBiographyDescriptionHelper.getDescription(artistBiography)
         val expected = "<html><div width=400><font face=\"arial\">${artistBiography.biography}</font></div></html>"
 
         assertEquals(expected, result)
     }
+
+    @Test
+    fun `on double slash should return br`(){
+        val artistBiography = ArtistBiography("Artist", "Biography\\n", "url", false)
+
+        val result = artistBiographyDescriptionHelper.getDescription(artistBiography)
+        val expected = "<html><div width=400><font face=\"arial\">Biography<br></font></div></html>"
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `on simple slash should return br`(){
+        val artistBiography = ArtistBiography("Artist", "Biography\n", "url", false)
+
+        val result = artistBiographyDescriptionHelper.getDescription(artistBiography)
+        val expected = "<html><div width=400><font face=\"arial\">Biography<br></font></div></html>"
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `should remove apostrophes`(){
+        val artistBiography = ArtistBiography("Artist", "Biography's", "url", false)
+
+        val result = artistBiographyDescriptionHelper.getDescription(artistBiography)
+        val expected = "<html><div width=400><font face=\"arial\">Biography s</font></div></html>"
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `should bold and uppercase artist name`(){
+        val artistBiography = ArtistBiography("Artist", "Biography Artist", "url", false)
+
+        val result = artistBiographyDescriptionHelper.getDescription(artistBiography)
+        val expected = "<html><div width=400><font face=\"arial\">Biography <b>ARTIST</b></font></div></html>"
+
+        assertEquals(expected, result)
+    }
+
 }

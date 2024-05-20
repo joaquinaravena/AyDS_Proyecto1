@@ -16,22 +16,21 @@ class OtherInfoPresenterTest {
     private val repository: OtherInfoRepository = mockk(relaxUnitFun = true)
     private val artistBiographyDescriptionHelper: ArtistBiographyDescriptionHelper = mockk(relaxUnitFun = true)
 
-    private val otherInfoPresenter: OtherInfoPresenter = OtherInfoPresenterImpl(repository, artistBiographyDescriptionHelper)
+    private val otherInfoPresenter: OtherInfoPresenter =
+        OtherInfoPresenterImpl(repository, artistBiographyDescriptionHelper)
 
     @Test
     fun `given an Artist who is in the repository should show the artist info`() {
+        val artistBiography = ArtistBiography("artistName", "biography", "url")
+        every { repository.getArtistInfo("artistName") } returns artistBiography
+        every { artistBiographyDescriptionHelper.getDescription(artistBiography) } returns "description"
 
-        every { repository.getArtistInfo("artistName") } returns ArtistBiography("artistName", "description", "url")
+        val artistBiographyTester: (ArtistBiographyUiState) -> Unit = mockk(relaxed = true)
 
-        val ArtistBiographyUiState: ArtistBiographyUiState = mockk()
-        val ArtistBiographyUiStateTester: (ArtistBiographyUiState) -> Unit = mockk(relaxed = true){
-            otherInfoPresenter.artistBiographyObservable.subscribe{
-                TODO(it)
-            }
-        }
-
+        otherInfoPresenter.artistBiographyObservable.subscribe(artistBiographyTester)
         otherInfoPresenter.getArtistInfo("artistName")
 
-        verify { ArtistBiographyUiStateTester(ArtistBiographyUiState) }
+        val result= ArtistBiographyUiState("artistName", "description", "url")
+        verify { artistBiographyTester(result) }
     }
 }
