@@ -12,7 +12,6 @@ data class CardEntity(
     val artistName: String,
     val description: String,
     val infoUrl: String,
-    @TypeConverters(SourceTypeConverter::class)
     val source: String,
     @TypeConverters(SourceLogoUrlTypeConverter::class)
     val sourceLogoUrl: String
@@ -22,19 +21,11 @@ data class CardEntity(
 interface CardDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertArticle(article: CardEntity)
+    fun insertCard(card: CardEntity)
 
     @Query("SELECT * FROM Cardentity WHERE artistName LIKE :artistName AND source LIKE :source LIMIT 1")
-    fun getArticleByArtistName(artistName: String, source: String): CardEntity?
+    fun getCardByArtistName(artistName: String, source: String): CardEntity?
 
-}
-
-class SourceTypeConverter {
-    @TypeConverter
-    fun toSource(value: String) = enumValueOf<Source>(value)
-
-    @TypeConverter
-    fun fromSource(value: Source) = value.name
 }
 
 class SourceLogoUrlTypeConverter {
@@ -43,11 +34,6 @@ class SourceLogoUrlTypeConverter {
 
     @TypeConverter
     fun fromSourceLogoUrl(value: SourceLogoUrl) = value.url
-}
-enum class Source {
-    LastFMAPI,
-    Wikipedia,
-    NYTimes
 }
 
 enum class SourceLogoUrl(val url: String) {

@@ -4,14 +4,14 @@ import java.io.IOException
 
 internal class LastFMServiceImpl (
     private val lastFMAPI: LastFMAPI,
-    private val lastFMToArtistBiographyResolver: LastFMToArtistBiographyResolver
+    private val lastFMToBiographyResolver: LastFMToBiographyResolver
 ) : LastFMService{
     override fun getArticle(artistName: String): LastFMBiography {
 
         var artistBiography = LastFMBiography(artistName, "", "")
         try {
             val callResponse = getSongFromService(artistName)
-            artistBiography = lastFMToArtistBiographyResolver.map(callResponse.body(), artistName)
+            artistBiography = lastFMToBiographyResolver.map(callResponse.body(), artistName)
         } catch (e1: IOException) {
             e1.printStackTrace()
         }

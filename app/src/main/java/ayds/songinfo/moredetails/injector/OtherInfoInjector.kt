@@ -4,7 +4,7 @@ import ayds.artist.external.lastfm.injector.LastFMInjector
 import ayds.songinfo.moredetails.data.repository.local.OtherInfoLocalStorageImpl
 import ayds.songinfo.moredetails.data.repository.OtherInfoRepositoryImpl
 import ayds.songinfo.moredetails.data.repository.local.CardDatabase
-import ayds.songinfo.moredetails.presentation.ArtistBiographyDescriptionHelperImpl
+import ayds.songinfo.moredetails.presentation.CardDescriptionHelperImpl
 import ayds.songinfo.moredetails.presentation.OtherInfoPresenter
 import ayds.songinfo.moredetails.presentation.OtherInfoPresenterImpl
 
@@ -24,7 +24,7 @@ object OtherInfoInjector {
 
         val repository = OtherInfoRepositoryImpl(articleLocalStorage, lastFMService)
 
-        val artistBiographyDescriptionHelper = ArtistBiographyDescriptionHelperImpl()
+        val artistBiographyDescriptionHelper = CardDescriptionHelperImpl()
 
         presenter = OtherInfoPresenterImpl(repository, artistBiographyDescriptionHelper)
     }

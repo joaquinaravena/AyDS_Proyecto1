@@ -3,7 +3,8 @@ package ayds.songinfo.moredetails.data.repository
 import ayds.artist.external.lastfm.data.LastFMBiography
 import ayds.artist.external.lastfm.data.LastFMService
 import ayds.songinfo.moredetails.data.repository.local.OtherInfoLocalStorage
-import ayds.songinfo.moredetails.domain.ArtistBiography
+import ayds.songinfo.moredetails.domain.Card
+import ayds.songinfo.moredetails.domain.CardSource
 import ayds.songinfo.moredetails.domain.OtherInfoRepository
 
 internal class OtherInfoRepositoryImpl(
@@ -11,31 +12,32 @@ internal class OtherInfoRepositoryImpl(
     private val lastFMService: LastFMService,
 ) : OtherInfoRepository {
 
-    override fun getArtistInfo(artistName: String): ArtistBiography {
-        val dbArticle = otherInfoLocalStorage.getArticle(artistName)
+    override fun getArtistInfo(artistName: String): Card {
+        val dbCard = otherInfoLocalStorage.getArticle(artistName)
 
-        val artistBiography: ArtistBiography
+        val card: Card
 
-        if (dbArticle != null) {
-            artistBiography = dbArticle.apply { markItAsLocal() }
+        if (dbCard != null) {
+            card = dbCard.apply { markItAsLocal() }
         } else {
-            artistBiography = lastFMBiographyToArtistBiography(lastFMService.getArticle(artistName))
-            if (artistBiography.biography.isNotEmpty()) {
-                otherInfoLocalStorage.insertArtist(artistBiography)
+            card = lastFMBiographyToCard(lastFMService.getArticle(artistName))
+            if (card.text.isNotEmpty()) {
+                otherInfoLocalStorage.insertArtist(card)
             }
         }
-        return artistBiography
+        return card
     }
 
-    private fun ArtistBiography.markItAsLocal() {
+    private fun Card.markItAsLocal() {
         isLocallyStored = true
     }
 
-    private fun lastFMBiographyToArtistBiography(lastFm: LastFMBiography): ArtistBiography {
-        return ArtistBiography(
+    private fun lastFMBiographyToCard(lastFm: LastFMBiography): Card {
+        return Card(
             lastFm.artistName,
             lastFm.biography,
-            lastFm.url
+            lastFm.url,
+            CardSource.LastFM
         )
     }
 }
