@@ -19,7 +19,7 @@ internal class OtherInfoPresenterImpl(
     override val cardObservable = Subject<CardUiState>()
 
     override fun updateCard(artistName: String) {
-        val card = repository.getArtistInfo(artistName)
+        val card = repository.getCard(artistName)
 
         val uiState = card.toUiState()
 

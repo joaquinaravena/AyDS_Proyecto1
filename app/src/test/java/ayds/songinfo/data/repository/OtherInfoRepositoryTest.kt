@@ -20,9 +20,9 @@ class OtherInfoRepositoryTest {
     @Test
     fun `given a local stored article should return artist biography`() {
         val cardMock = Card("artistName", "artistBiography", "url", CardSource.LastFM, false)
-        every { otherInfoLocalStorage.getArticle("artistName") } returns cardMock
+        every { otherInfoLocalStorage.getCard("artistName") } returns cardMock
 
-        val result = otherInfoRepository.getArtistInfo("artistName")
+        val result = otherInfoRepository.getCard("artistName")
         assertEquals(true, result.isLocallyStored)
         assertEquals(cardMock, result)
     }
@@ -30,29 +30,29 @@ class OtherInfoRepositoryTest {
     @Test
     fun `given a non local stored article and non empty should return artist biography`() {
         val cardMock = Card("artistName", "artistBiography", "url", CardSource.LastFM, false)
-        every { otherInfoLocalStorage.getArticle("artistName") } returns null
+        every { otherInfoLocalStorage.getCard("artistName") } returns null
         every { lastFmService.getArticle("artistName") } returns LastFMBiography("artistName", "artistBiography", "url")
 
 
-        val result = otherInfoRepository.getArtistInfo("artistName")
+        val result = otherInfoRepository.getCard("artistName")
 
         assertEquals(false, result.isLocallyStored)
         assertEquals(cardMock, result)
-        verify { otherInfoLocalStorage.insertArtist(cardMock) }
+        verify { otherInfoLocalStorage.insertCard(cardMock) }
 
     }
 
     @Test
     fun `given a non local stored article and empty should return artist biography`() {
         val cardMock = Card("artistName", "", "url", CardSource.LastFM, false)
-        every { otherInfoLocalStorage.getArticle("artistName") } returns null
+        every { otherInfoLocalStorage.getCard("artistName") } returns null
         every { lastFmService.getArticle("artistName") } returns LastFMBiography("artistName", "", "url")
 
-        val result = otherInfoRepository.getArtistInfo("artistName")
+        val result = otherInfoRepository.getCard("artistName")
 
         assertEquals(false, result.isLocallyStored)
         assertEquals(cardMock, result)
-        verify(inverse = true) { otherInfoLocalStorage.insertArtist(cardMock) }
+        verify(inverse = true) { otherInfoLocalStorage.insertCard(cardMock) }
     }
 }
 

@@ -23,7 +23,7 @@ class OtherInfoPresenterTest {
     @Test
     fun `given an Artist who is in the repository should show the artist info`() {
         val card = Card("artistName", "biography", "url", CardSource.LastFM)
-        every { repository.getArtistInfo("artistName") } returns card
+        every { repository.getCard("artistName") } returns card
         every { cardDescriptionHelper.getDescription(card) } returns "description"
 
         val artistBiographyTester: (CardUiState) -> Unit = mockk(relaxed = true)

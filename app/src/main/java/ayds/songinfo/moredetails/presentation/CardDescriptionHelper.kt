@@ -9,6 +9,7 @@ interface CardDescriptionHelper {
 
 private const val HEADER = "<html><div width=400><font face=\"arial\">"
 private const val FOOTER = "</font></div></html>"
+private const val LOCAL_MARKER = "[*]"
 
 internal class CardDescriptionHelperImpl : CardDescriptionHelper {
 
@@ -18,8 +19,8 @@ internal class CardDescriptionHelperImpl : CardDescriptionHelper {
     }
 
     private fun getTextBiography(card: Card): String {
-        val prefix = if (card.isLocallyStored) "[*]" else ""
-        val text = card.text.replace("\\n", "\n")
+        val prefix = if (card.isLocallyStored) LOCAL_MARKER else ""
+        val text = card.text
         return "$prefix$text"
     }
 
@@ -28,7 +29,7 @@ internal class CardDescriptionHelperImpl : CardDescriptionHelper {
         builder.append(HEADER)
         val textWithBold = text
             .replace("'", " ")
-            .replace("\n", "<br>")
+            .replace("\\n", "<br>")
             .replace(
                 "(?i)$term".toRegex(),
                 "<b>" + term.uppercase(Locale.getDefault()) + "</b>"

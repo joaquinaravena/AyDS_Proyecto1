@@ -1,3 +1,5 @@
+package ayds.songinfo.moredetails.injector
+
 import android.content.Context
 import androidx.room.Room
 import ayds.artist.external.lastfm.injector.LastFMInjector
@@ -17,12 +19,14 @@ object OtherInfoInjector {
 
     fun initGraph(context: Context) {
 
+        LastFMInjector.init()
+
         val cardDatabase =
             Room.databaseBuilder(context, CardDatabase::class.java, ARTICLE_BD_NAME).build()
-        val lastFMService = LastFMInjector.lastFMService
+
         val articleLocalStorage = OtherInfoLocalStorageImpl(cardDatabase)
 
-        val repository = OtherInfoRepositoryImpl(articleLocalStorage, lastFMService)
+        val repository = OtherInfoRepositoryImpl(articleLocalStorage, LastFMInjector.lastFMService)
 
         val artistBiographyDescriptionHelper = CardDescriptionHelperImpl()
 

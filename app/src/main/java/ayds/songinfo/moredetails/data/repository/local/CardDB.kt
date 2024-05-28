@@ -9,12 +9,11 @@ abstract class CardDatabase : RoomDatabase() {
 
 @Entity(primaryKeys = ["artistName", "source"])
 data class CardEntity(
+    @PrimaryKey
     val artistName: String,
     val description: String,
     val infoUrl: String,
-    val source: String,
-    @TypeConverters(SourceLogoUrlTypeConverter::class)
-    val sourceLogoUrl: String
+    val source: Int,
 )
 
 @Dao
@@ -23,8 +22,8 @@ interface CardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCard(card: CardEntity)
 
-    @Query("SELECT * FROM Cardentity WHERE artistName LIKE :artistName AND source LIKE :source LIMIT 1")
-    fun getCardByArtistName(artistName: String, source: String): CardEntity?
+    @Query("SELECT * FROM CardEntity WHERE artistName LIKE :artistName AND source LIKE :artistName LIMIT 1")
+    fun getCardByArtistName(artistName: String): CardEntity?
 
 }
 
