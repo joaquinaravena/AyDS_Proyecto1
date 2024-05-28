@@ -11,16 +11,20 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 private const val LASTFM_BASE_URL = "https://ws.audioscrobbler.com/2.0/"
 
 object LastFMInjector {
-    private val lastFMAPI = getLastFMAPI()
-    private val lastFMToArtistBiographyResolver = LastFMToBiographyResolverImpl()
 
-    val lastFMService: LastFMService =
-        LastFMServiceImpl(lastFMAPI, lastFMToArtistBiographyResolver)
+    lateinit var lastFMService: LastFMService
 
-    private fun getLastFMAPI() = getRetrofit().create(LastFMAPI::class.java)
+    fun init() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(LASTFM_BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
 
-    private fun getRetrofit() = Retrofit.Builder()
-        .baseUrl(LASTFM_BASE_URL)
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .build()
+        val lastFMAPI = retrofit.create(LastFMAPI::class.java)
+
+        val lastFMToBiographyResolver = LastFMToBiographyResolverImpl()
+
+        lastFMService = LastFMServiceImpl(lastFMAPI, lastFMToBiographyResolver)
+    }
+
 }

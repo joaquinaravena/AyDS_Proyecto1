@@ -12,17 +12,17 @@ internal class OtherInfoRepositoryImpl(
     private val lastFMService: LastFMService,
 ) : OtherInfoRepository {
 
-    override fun getArtistInfo(artistName: String): Card {
-        val dbCard = otherInfoLocalStorage.getArticle(artistName)
+    override fun getCard(artistName: String): Card {
+        val dbCard = otherInfoLocalStorage.getCard(artistName)
 
         val card: Card
 
         if (dbCard != null) {
             card = dbCard.apply { markItAsLocal() }
         } else {
-            card = lastFMBiographyToCard(lastFMService.getArticle(artistName))
+            card = lastFMService.getArticle(artistName).toCard()
             if (card.text.isNotEmpty()) {
-                otherInfoLocalStorage.insertArtist(card)
+                otherInfoLocalStorage.insertCard(card)
             }
         }
         return card
@@ -32,12 +32,8 @@ internal class OtherInfoRepositoryImpl(
         isLocallyStored = true
     }
 
-    private fun lastFMBiographyToCard(lastFm: LastFMBiography): Card {
-        return Card(
-            lastFm.artistName,
-            lastFm.biography,
-            lastFm.url,
-            CardSource.LastFM
-        )
-    }
+    private fun LastFMBiography.toCard() =
+        Card(artistName, biography, articleUrl,
+            CardSource.LastFM)
+
 }

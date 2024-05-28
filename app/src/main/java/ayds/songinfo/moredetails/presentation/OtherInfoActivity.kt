@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import ayds.songinfo.R
+import ayds.songinfo.moredetails.injector.OtherInfoInjector
 import com.squareup.picasso.Picasso
 
 class OtherInfoActivity : Activity() {

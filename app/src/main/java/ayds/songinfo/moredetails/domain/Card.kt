@@ -9,7 +9,5 @@ data class Card(
 )
 
 enum class CardSource {
-    LastFM,
-    Wikipedia,
-    NYTimes
+    LastFM
 }
