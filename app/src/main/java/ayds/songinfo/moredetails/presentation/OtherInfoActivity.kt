@@ -61,7 +61,7 @@ class OtherInfoActivity : Activity() {
     private fun updateUi(uiState: CardUiState) {
         runOnUiThread {
             updateOpenUrlButton(uiState.url)
-            updateLastFMLogo(uiState.imageUrl)
+            updateLogo(uiState.imageUrl)
             updateCardText(uiState.contentHtml)
         }
     }
@@ -78,7 +78,7 @@ class OtherInfoActivity : Activity() {
         startActivity(intent)
     }
 
-    private fun updateLastFMLogo(url: String) {
+    private fun updateLogo(url: String) {
         Picasso.get().load(url).into(sourceImageView)
     }
 

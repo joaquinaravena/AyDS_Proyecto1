@@ -49,14 +49,14 @@
                 android:text="View LastFM Article" />
 
             <ImageView
-                android:id="@+id/newYTImageView"
+                android:id="@+id/source2ImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:paddingTop="24dp"/>
 
             <TextView
-                android:id="@+id/newYTPane"
+                android:id="@+id/cardContent2TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -64,7 +64,7 @@
                 android:padding="16dp" />
 
             <Button
-                android:id="@+id/newYTButton"
+                android:id="@+id/openUrl2Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -72,14 +72,14 @@
                 android:text="View New York Times Article" />
 
             <ImageView
-                android:id="@+id/wikipediaImageView"
+                android:id="@+id/source3ImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:paddingTop="24dp"/>
 
             <TextView
-                android:id="@+id/wikipediaPane"
+                android:id="@+id/cardContent3TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -87,7 +87,7 @@
                 android:padding="16dp" />
 
             <Button
-                android:id="@+id/wikipediaButton"
+                android:id="@+id/openUrl3Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
