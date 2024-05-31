@@ -7,7 +7,7 @@ abstract class CardDatabase : RoomDatabase() {
     abstract fun CardDao(): CardDao
 }
 
-@Entity(primaryKeys = ["artistName", "source"])
+@Entity
 data class CardEntity(
     @PrimaryKey
     val artistName: String,
