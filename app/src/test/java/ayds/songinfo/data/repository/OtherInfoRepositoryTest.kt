@@ -4,8 +4,8 @@ import ayds.artist.external.lastfm.data.LastFMBiography
 import ayds.artist.external.lastfm.data.LastFMService
 import ayds.songinfo.moredetails.data.repository.OtherInfoRepositoryImpl
 import ayds.songinfo.moredetails.data.repository.local.OtherInfoLocalStorage
-import ayds.songinfo.moredetails.domain.Card
-import ayds.songinfo.moredetails.domain.CardSource
+import ayds.artist.external.Card
+import ayds.artist.external.CardSource
 import ayds.songinfo.moredetails.domain.OtherInfoRepository
 import io.mockk.every
 import org.junit.Test

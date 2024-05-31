@@ -4,7 +4,7 @@ import ayds.artist.external.newyorktimes.data.NYTimesArticle.EmptyArtistDataExte
 import ayds.artist.external.newyorktimes.data.NYTimesArticle.NYTimesArticleWithData
 import java.io.IOException
 
-internal class NYTimesServiceImpl(
+class NYTimesServiceImpl(
     private val nyTimesAPI: NYTimesAPI,
     private val nyTimesToArtistResolver: NYTimesToArtistResolver,
 ) : NYTimesService {

@@ -3,7 +3,8 @@ package ayds.songinfo.moredetails.presentation
 import ayds.observer.Observable
 import ayds.observer.Subject
 import ayds.songinfo.moredetails.domain.OtherInfoRepository
-import ayds.songinfo.moredetails.domain.Card
+import ayds.artist.external.Card
+import ayds.artist.external.CardSource
 
 interface OtherInfoPresenter {
     val cardObservable: Observable<CardUiState>
@@ -19,11 +20,12 @@ internal class OtherInfoPresenterImpl(
     override val cardObservable = Subject<CardUiState>()
 
     override fun updateCard(artistName: String) {
-        val card = repository.getCard(artistName)
+        val cards = repository.getCard(artistName)
 
-        val uiState = card.toUiState()
-
-        cardObservable.notify(uiState)
+        cards.forEach { card ->
+            val uiState = card.toUiState()
+            cardObservable.notify(uiState)
+        }
     }
 
     private fun Card.toUiState() = CardUiState(
@@ -32,3 +34,4 @@ internal class OtherInfoPresenterImpl(
         url
     )
 }
+

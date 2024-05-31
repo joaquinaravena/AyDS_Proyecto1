@@ -2,7 +2,7 @@ package ayds.artist.external.lastfm.data
 
 import java.io.IOException
 
-internal class LastFMServiceImpl (
+class LastFMServiceImpl (
     private val lastFMAPI: LastFMAPI,
     private val lastFMToBiographyResolver: LastFMToBiographyResolver
 ) : LastFMService{

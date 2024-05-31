@@ -1,10 +1,6 @@
 package ayds.artist.external.newyorktimes.injector
 
-import ayds.artist.external.newyorktimes.data.NYTimesAPI
-import ayds.artist.external.newyorktimes.data.NYTimesService
-import ayds.artist.external.newyorktimes.data.NYTimesServiceImpl
-import ayds.artist.external.newyorktimes.data.NYTimesToArtistResolver
-import ayds.artist.external.newyorktimes.data.NYTimesToArtistResolverImpl
+import ayds.artist.external.newyorktimes.data.*
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -14,7 +10,11 @@ object NYTimesInjector {
     private val nyTimesAPI = getNYTimesAPI()
     private val nyTimesToArtistResolver: NYTimesToArtistResolver = NYTimesToArtistResolverImpl()
 
-    val nyTimesService: NYTimesService = NYTimesServiceImpl(nyTimesAPI, nyTimesToArtistResolver)
+    fun init(): NYTimesProxy{
+        val nyTimesService: NYTimesService = NYTimesServiceImpl(nyTimesAPI, nyTimesToArtistResolver)
+        val nyTimesProxy: NYTimesProxy = NYTimesProxyImpl(nyTimesService)
+        return nyTimesProxy
+    }
 
     private fun getNYTimesAPI(): NYTimesAPI {
         val nyTimesAPIRetrofit = Retrofit.Builder()

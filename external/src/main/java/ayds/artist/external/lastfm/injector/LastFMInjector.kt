@@ -1,8 +1,6 @@
 package ayds.artist.external.lastfm.injector
 
-import ayds.artist.external.lastfm.data.LastFMAPI
-import ayds.artist.external.lastfm.data.LastFMService
-import ayds.artist.external.lastfm.data.LastFMServiceImpl
+import ayds.artist.external.lastfm.data.*
 import ayds.artist.external.lastfm.data.LastFMToBiographyResolverImpl
 
 import retrofit2.Retrofit
@@ -13,8 +11,9 @@ private const val LASTFM_BASE_URL = "https://ws.audioscrobbler.com/2.0/"
 object LastFMInjector {
 
     lateinit var lastFMService: LastFMService
+    lateinit var lastFMProxy: LastFMProxy
 
-    fun init() {
+    fun init(): LastFMProxy {
         val retrofit = Retrofit.Builder()
             .baseUrl(LASTFM_BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -25,6 +24,8 @@ object LastFMInjector {
         val lastFMToBiographyResolver = LastFMToBiographyResolverImpl()
 
         lastFMService = LastFMServiceImpl(lastFMAPI, lastFMToBiographyResolver)
+        lastFMProxy = LastFMProxyImpl(lastFMService)
+        return lastFMProxy
     }
 
 }

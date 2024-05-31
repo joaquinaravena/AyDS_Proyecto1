@@ -1,6 +1,6 @@
 package ayds.songinfo.moredetails.presentation
 
-import ayds.songinfo.moredetails.domain.Card
+import ayds.artist.external.Card
 import java.util.Locale
 
 interface CardDescriptionHelper {

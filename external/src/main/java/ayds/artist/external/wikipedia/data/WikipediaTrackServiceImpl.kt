@@ -2,7 +2,7 @@ package ayds.artist.external.wikipedia.data
 
 import retrofit2.Response
 
-internal class WikipediaTrackServiceImpl(
+class WikipediaTrackServiceImpl(
     private val wikipediaTrackAPI: WikipediaTrackAPI,
     private val wikipediaToInfoResolver: WikipediaToInfoResolver,
 ) : WikipediaTrackService {
