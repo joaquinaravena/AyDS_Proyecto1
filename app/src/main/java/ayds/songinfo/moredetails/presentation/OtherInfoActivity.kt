@@ -8,6 +8,7 @@ import android.text.Html
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import ayds.artist.external.CardSource
 import ayds.songinfo.R
 import ayds.songinfo.moredetails.injector.OtherInfoInjector
 import com.squareup.picasso.Picasso
@@ -16,6 +17,15 @@ class OtherInfoActivity : Activity() {
     private lateinit var cardContentTextView: TextView
     private lateinit var openUrlButton: Button
     private lateinit var sourceImageView: ImageView
+
+
+    private lateinit var cardContent1TextView: TextView
+    private lateinit var openUrl1Button: Button
+    private lateinit var source1ImageView: ImageView
+
+    private lateinit var cardContent2TextView: TextView
+    private lateinit var openUrl2Button: Button
+    private lateinit var source2ImageView: ImageView
 
     private lateinit var presenter: OtherInfoPresenter
 
@@ -45,6 +55,14 @@ class OtherInfoActivity : Activity() {
         cardContentTextView = findViewById(R.id.cardContent1TextView)
         openUrlButton = findViewById(R.id.openUrl1Button)
         sourceImageView = findViewById(R.id.source1ImageView)
+
+        cardContent1TextView = findViewById(R.id.cardContent2TextView)
+        openUrl1Button = findViewById(R.id.openUrl2Button)
+        source1ImageView = findViewById(R.id.source2ImageView)
+
+        cardContent2TextView = findViewById(R.id.cardContent3TextView)
+        openUrl2Button = findViewById(R.id.openUrl3Button)
+        source2ImageView = findViewById(R.id.source3ImageView)
     }
 
     private fun getArtistCardAsync() {
@@ -60,15 +78,23 @@ class OtherInfoActivity : Activity() {
 
     private fun updateUi(uiState: CardUiState) {
         runOnUiThread {
-            updateOpenUrlButton(uiState.url)
-            updateLogo(uiState.imageUrl)
-            updateCardText(uiState.contentHtml)
+            updateOpenUrlButton(uiState.url, uiState.source)
+            updateLogo(uiState.imageUrl, uiState.source)
+            updateCardText(uiState.contentHtml, uiState.source)
         }
     }
 
-    private fun updateOpenUrlButton(url: String) {
-        openUrlButton.setOnClickListener {
-            navigateToUrl(url)
+    private fun updateOpenUrlButton(url: String, source: CardSource) {
+        when (source) {
+            CardSource.LastFM -> openUrlButton.setOnClickListener {
+                navigateToUrl(url)
+            }
+            CardSource.NYTimes -> openUrl1Button.setOnClickListener {
+                navigateToUrl(url)
+            }
+            CardSource.Wikipedia -> openUrl2Button.setOnClickListener {
+                navigateToUrl(url)
+            }
         }
     }
 
@@ -78,15 +104,23 @@ class OtherInfoActivity : Activity() {
         startActivity(intent)
     }
 
-    private fun updateLogo(url: String) {
-        Picasso.get().load(url).into(sourceImageView)
+    private fun updateLogo(url: String, source: CardSource) {
+        when (source) {
+            CardSource.LastFM -> Picasso.get().load(url).into(sourceImageView)
+            CardSource.NYTimes -> Picasso.get().load(url).into(source1ImageView)
+            CardSource.Wikipedia -> Picasso.get().load(url).into(source2ImageView)
+        }
     }
 
     private fun getArtistName() =
         intent.getStringExtra(ARTIST_NAME_EXTRA) ?: throw Exception("Missing artist name")
 
-    private fun updateCardText(infoHtml: String) {
-        cardContentTextView.text = Html.fromHtml(infoHtml)
+    private fun updateCardText(infoHtml: String, source: CardSource) {
+        when (source) {
+            CardSource.LastFM -> cardContentTextView.text = Html.fromHtml(infoHtml)
+            CardSource.NYTimes -> cardContent1TextView.text = Html.fromHtml(infoHtml)
+            CardSource.Wikipedia -> cardContent2TextView.text = Html.fromHtml(infoHtml)
+        }
     }
 
     companion object {

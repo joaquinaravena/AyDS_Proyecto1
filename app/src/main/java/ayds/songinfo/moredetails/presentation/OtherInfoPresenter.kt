@@ -4,7 +4,7 @@ import ayds.observer.Observable
 import ayds.observer.Subject
 import ayds.songinfo.moredetails.domain.OtherInfoRepository
 import ayds.artist.external.Card
-import ayds.artist.external.CardSource
+
 
 interface OtherInfoPresenter {
     val cardObservable: Observable<CardUiState>
@@ -31,7 +31,9 @@ internal class OtherInfoPresenterImpl(
     private fun Card.toUiState() = CardUiState(
         artistName,
         cardDescriptionHelper.getDescription(this),
-        url
+        url,
+        source,
+        sourceLogoUrl.toString()
     )
 }
 

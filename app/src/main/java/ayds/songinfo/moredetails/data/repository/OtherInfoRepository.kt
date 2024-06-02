@@ -11,7 +11,6 @@ internal class OtherInfoRepositoryImpl(
 ) : OtherInfoRepository {
 
     override fun getCard(artistName: String): List<Card> {
-        //esto que retorne lista de cards
         val dbCards = otherInfoLocalStorage.getCard(artistName)
 
         val cards: List<Card>

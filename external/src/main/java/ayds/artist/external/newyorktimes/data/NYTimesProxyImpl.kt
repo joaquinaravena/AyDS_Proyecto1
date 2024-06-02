@@ -13,7 +13,8 @@ class NYTimesProxyImpl(
                     article.name ?: "Unknown",
                     article.info ?: "Not found",
                     article.url,
-                    CardSource.NYTimes
+                    CardSource.NYTimes,
+                    "https://upload.wikimedia.org/wikipedia/commons/7/77/The_New_York_Times_logo.png"
                 )
             }
 
