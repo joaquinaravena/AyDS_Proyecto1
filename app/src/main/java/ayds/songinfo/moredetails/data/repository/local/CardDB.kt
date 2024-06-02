@@ -8,9 +8,8 @@ abstract class CardDatabase : RoomDatabase() {
     abstract fun CardDao(): CardDao
 }
 
-@Entity
+@Entity(primaryKeys = ["artistName", "source"])
 data class CardEntity(
-    @PrimaryKey
     val artistName: String,
     val description: String,
     val infoUrl: String,
@@ -21,7 +20,7 @@ data class CardEntity(
 interface CardDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCard(card: CardEntity)
+    fun insertCard(cards: CardEntity)
 
     @Query("SELECT * FROM CardEntity WHERE artistName LIKE :artistName AND source LIKE :source LIMIT 1")
     fun getCardByArtistNameAndSource(artistName: String, source: Int): CardEntity?

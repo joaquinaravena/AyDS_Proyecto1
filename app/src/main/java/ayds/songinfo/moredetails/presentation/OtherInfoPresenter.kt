@@ -33,7 +33,7 @@ internal class OtherInfoPresenterImpl(
         cardDescriptionHelper.getDescription(this),
         url,
         source,
-        sourceLogoUrl.toString()
+        sourceLogoUrl
     )
 }
 
