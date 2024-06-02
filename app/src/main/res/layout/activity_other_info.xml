@@ -35,7 +35,7 @@
                 android:padding="16dp" />
 
             <TextView
-                    android:id="@+id/sourcePane"
+                    android:id="@+id/source1Pane"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Source: LastFM"
@@ -63,6 +63,13 @@
                 android:linksClickable="true"
                 android:padding="16dp" />
 
+            <TextView
+                    android:id="@+id/source2Pane"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Source: NYTimes"
+                    android:padding="16dp"/>
+
             <Button
                 android:id="@+id/openUrl2Button"
                 android:layout_width="wrap_content"
@@ -84,6 +91,13 @@
                 android:autoLink="web"
                 android:linksClickable="true"
                 android:padding="16dp" />
+
+            <TextView
+                    android:id="@+id/source3Pane"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Source: Wikipedia"
+                    android:padding="16dp"/>
 
             <Button
                 android:id="@+id/openUrl3Button"
