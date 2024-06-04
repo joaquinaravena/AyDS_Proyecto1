@@ -1,7 +1,7 @@
 package ayds.songinfo.moredetails.data.repository.local
 
-import ayds.artist.external.Card
-import ayds.artist.external.CardSource
+import ayds.songinfo.moredetails.domain.Card
+import ayds.songinfo.moredetails.domain.CardSource
 import java.util.ArrayList
 
 interface OtherInfoLocalStorage {
@@ -26,7 +26,10 @@ internal class OtherInfoLocalStorageImpl(
             list.add(Card(nyEntity.artistName, nyEntity.description, nyEntity.infoUrl, CardSource.NYTimes,"https://upload.wikimedia.org/wikipedia/commons/7/77/The_New_York_Times_logo.png"))
         }
         if (wikipediaEntity != null) {
-            list.add(Card(wikipediaEntity.artistName, wikipediaEntity.description, wikipediaEntity.infoUrl,CardSource.Wikipedia, "https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png"))
+            list.add(
+                Card(wikipediaEntity.artistName, wikipediaEntity.description, wikipediaEntity.infoUrl,
+                    CardSource.Wikipedia, "https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png")
+            )
         }
 
         return list

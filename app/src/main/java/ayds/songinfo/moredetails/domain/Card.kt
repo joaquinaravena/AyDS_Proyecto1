@@ -1,4 +1,4 @@
-package ayds.artist.external
+package ayds.songinfo.moredetails.domain
 
 data class Card(
     val artistName: String,

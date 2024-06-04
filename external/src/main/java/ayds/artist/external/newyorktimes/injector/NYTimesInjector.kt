@@ -9,11 +9,10 @@ private const val LINK_API_NYTIMES = "https://api.nytimes.com/svc/search/v2/"
 object NYTimesInjector {
     private val nyTimesAPI = getNYTimesAPI()
     private val nyTimesToArtistResolver: NYTimesToArtistResolver = NYTimesToArtistResolverImpl()
+    lateinit var nyTimesService: NYTimesService
 
-    fun init(): NYTimesProxy{
-        val nyTimesService: NYTimesService = NYTimesServiceImpl(nyTimesAPI, nyTimesToArtistResolver)
-        val nyTimesProxy: NYTimesProxy = NYTimesProxyImpl(nyTimesService)
-        return nyTimesProxy
+    fun init() {
+        nyTimesService = NYTimesServiceImpl(nyTimesAPI, nyTimesToArtistResolver)
     }
 
     private fun getNYTimesAPI(): NYTimesAPI {

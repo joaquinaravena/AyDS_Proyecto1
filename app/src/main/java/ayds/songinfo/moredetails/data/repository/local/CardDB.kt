@@ -1,7 +1,6 @@
 package ayds.songinfo.moredetails.data.repository.local
 
 import androidx.room.*
-import ayds.artist.external.CardSource
 
 @Database(entities = [CardEntity::class], version = 1)
 abstract class CardDatabase : RoomDatabase() {

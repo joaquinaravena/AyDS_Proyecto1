@@ -1,7 +1,7 @@
 package ayds.songinfo.presentation
 
-import ayds.artist.external.Card
-import ayds.artist.external.CardSource
+import ayds.songinfo.moredetails.domain.Card
+import ayds.songinfo.moredetails.domain.CardSource
 import ayds.songinfo.moredetails.domain.OtherInfoRepository
 import ayds.songinfo.moredetails.presentation.CardDescriptionHelper
 import ayds.songinfo.moredetails.presentation.CardUiState

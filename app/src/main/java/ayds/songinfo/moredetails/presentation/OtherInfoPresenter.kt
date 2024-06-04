@@ -3,7 +3,7 @@ package ayds.songinfo.moredetails.presentation
 import ayds.observer.Observable
 import ayds.observer.Subject
 import ayds.songinfo.moredetails.domain.OtherInfoRepository
-import ayds.artist.external.Card
+import ayds.songinfo.moredetails.domain.Card
 
 
 interface OtherInfoPresenter {

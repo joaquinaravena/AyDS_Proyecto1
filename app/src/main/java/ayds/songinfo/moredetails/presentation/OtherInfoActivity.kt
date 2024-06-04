@@ -8,7 +8,7 @@ import android.text.Html
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import ayds.artist.external.CardSource
+import ayds.songinfo.moredetails.domain.CardSource
 import ayds.songinfo.R
 import ayds.songinfo.moredetails.injector.OtherInfoInjector
 import com.squareup.picasso.Picasso

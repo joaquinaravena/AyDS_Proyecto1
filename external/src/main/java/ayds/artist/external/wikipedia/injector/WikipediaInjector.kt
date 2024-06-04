@@ -11,17 +11,14 @@ private const val WIKIPEDIA_URL = "https://en.wikipedia.org/w/"
 object WikipediaInjector {
     private val wikipediaTrackAPI = getWikipediaAPI()
     private val wikipediaToInfoResolver: WikipediaToInfoResolver = JsonToInfoResolver()
+    lateinit var wikipediaTrackService: WikipediaTrackService
 
-    fun init(): WikipediaProxy{
-        val wikipediaTrackService: WikipediaTrackService =
-            WikipediaTrackServiceImpl(
-                wikipediaTrackAPI,
-                wikipediaToInfoResolver
-            )
-        val wikipediaProxy: WikipediaProxy = WikipediaProxyImpl(wikipediaTrackService)
-        return wikipediaProxy
+    fun init(){
+        wikipediaTrackService = WikipediaTrackServiceImpl(
+            wikipediaTrackAPI,
+            wikipediaToInfoResolver
+        )
     }
-
 
     private fun getRetrofit() = Retrofit.Builder()
         .baseUrl(WIKIPEDIA_URL)

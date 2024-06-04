@@ -1,13 +1,13 @@
 package ayds.songinfo.moredetails.data.repository
 
-import ayds.songinfo.moredetails.data.Broker
+import ayds.songinfo.moredetails.data.OtherInfoBroker
 import ayds.songinfo.moredetails.data.repository.local.OtherInfoLocalStorage
-import ayds.artist.external.Card
+import ayds.songinfo.moredetails.domain.Card
 import ayds.songinfo.moredetails.domain.OtherInfoRepository
 
 internal class OtherInfoRepositoryImpl(
     private val otherInfoLocalStorage: OtherInfoLocalStorage,
-    private val broker: Broker,
+    private val otherInfoBroker: OtherInfoBroker,
 ) : OtherInfoRepository {
 
     override fun getCard(artistName: String): List<Card> {
@@ -20,12 +20,8 @@ internal class OtherInfoRepositoryImpl(
                 apply { dbCard.markItAsLocal(); }
             cards = dbCards
         } else {
-            cards = broker.getListCards(artistName)
-            for(card in cards){
-                if (card.text.isNotEmpty()) {
-                    otherInfoLocalStorage.insertCard(card)
-                }
-            }
+            cards = otherInfoBroker.getListCards(artistName)
+            cards.forEach { card -> otherInfoLocalStorage.insertCard(card) }
         }
         return cards
     }

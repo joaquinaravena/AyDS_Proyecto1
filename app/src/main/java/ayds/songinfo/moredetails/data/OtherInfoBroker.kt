@@ -1,7 +1,7 @@
 package ayds.songinfo.moredetails.data
 
-import ayds.artist.external.Card
+import ayds.songinfo.moredetails.domain.Card
 
-interface Broker {
+interface OtherInfoBroker {
     fun getListCards(artistName: String): List<Card>
 }
